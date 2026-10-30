@@ -22,7 +22,7 @@ export type AlertCode =
 export interface MediaBuyer {
   id: string;
   name: string;
-  role: 'manager' | 'mediabuyer';
+  role: 'owner' | 'manager' | 'mediabuyer';
   email: string | null;
   user_id?: string | null;
 }

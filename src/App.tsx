@@ -61,10 +61,12 @@ export default function App({ api, demo }: { api: Api; demo?: { hasData: boolean
     );
   }
 
-  const visible = me.isManager ? buyers : buyers.filter((b) => b.id === me.buyer!.id);
+  // L'owner n'a pas d'onglet clients : ni onglet, ni choix dans les listes « Media buyer »
+  const team = buyers.filter((b) => b.role !== 'owner');
+  const visible = me.isManager ? team : team.filter((b) => b.id === me.buyer!.id);
 
   return (
-    <AppProvider value={{ api, me, buyers, notify }}>
+    <AppProvider value={{ api, me, buyers: team, notify }}>
       <BrowserRouter>
         <div className="shell">
           <Rail buyers={visible} me={me} api={api} demo={demo} />

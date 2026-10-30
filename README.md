@@ -25,7 +25,7 @@ npm run dev
 ## 2) ربط Supabase (الإنتاج)
 
 1. أنشئ مشروعاً في https://supabase.com
-2. **SQL Editor** ← الصق محتوى `supabase/migrations/20261030000000_init.sql` ← Run
+2. **SQL Editor** ← الصق محتوى `supabase/migrations/20261030000000_init.sql` ← Run، ثم `20261030010000_owner_role.sql` ← Run
 3. ثم الصق `supabase/seed.sql` ← Run (يستورد 56 اشتراكاً و107 زبائن من الشيت)
 4. اربط البريد الإلكتروني لكل ميديا باير:
    ```sql
@@ -43,6 +43,9 @@ npm run dev
 بالـ Supabase CLI بدل الخطوتين 2 و3: `supabase link` ثم `supabase db push` ثم شغّل `seed.sql`.
 
 **ميديا باير جديد:** `insert into media_buyers (name, email) values ('YACINE', 'yacine@exemple.com');`
+
+**المالك (owner):** يرى ويعدّل كل شيء مثل الغيرانت، وهو الوحيد الذي يضيف أو يعدّل أعضاء الفريق (الأدوار والبريد). ليس له تبويب زبائن ولا يظهر في COST SHEET:
+`insert into media_buyers (name, role, email) values ('OWNER', 'owner', 'owner@exemple.com');`
 
 ## 3) تحديث البيانات من الشيت (أثناء فترة الانتقال)
 

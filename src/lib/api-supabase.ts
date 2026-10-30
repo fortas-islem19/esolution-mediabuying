@@ -30,7 +30,7 @@ export const supabaseApi: Api = {
     const user = data.user;
     if (!user) return { userEmail: null, buyer: null, isManager: false };
     const buyer = must(await supabase.from('media_buyers').select('*').eq('user_id', user.id).maybeSingle()) as MediaBuyer | null;
-    return { userEmail: user.email ?? null, buyer, isManager: buyer?.role === 'manager' };
+    return { userEmail: user.email ?? null, buyer, isManager: buyer?.role === 'manager' || buyer?.role === 'owner' };
   },
 
   async listBuyers() {
