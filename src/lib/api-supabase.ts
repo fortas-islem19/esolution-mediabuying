@@ -106,7 +106,9 @@ export const supabaseApi: Api = {
   },
 
   subscribe(onChange) {
-    const channel = supabase.channel('cost-sheet-live');
+    // Nom unique par abonnement : supabase.channel() renvoie le canal existant pour un même nom, et ajouter des
+    // callbacks après subscribe() lève une erreur (écran blanc dès que deux écrans écoutent en même temps)
+    const channel = supabase.channel(`live-${crypto.randomUUID()}`);
     for (const table of ['subscriptions', 'payments', 'clients']) {
       channel.on('postgres_changes', { event: '*', schema: 'public', table }, () => onChange());
     }
