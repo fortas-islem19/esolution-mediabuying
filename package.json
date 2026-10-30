@@ -1,0 +1,26 @@
+{
+  "name": "esolutions-mediabuying",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "sheet:sql": "node scripts/sheet-to-sql.mjs \"ISLEM:data/islem.csv:manager\" \"SAMIR:data/samir.csv\" > supabase/seed.sql",
+    "sheet:demo": "node scripts/sheet-to-sql.mjs --json \"ISLEM:data/islem.csv:manager\" \"SAMIR:data/samir.csv\" > src/demo/seed.json"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.5"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
+  }
+}
