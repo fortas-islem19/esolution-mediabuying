@@ -55,6 +55,7 @@ npm run dev
 ## 4) النشر
 
 Vercel أو Netlify: أمر البناء `npm run build`، مجلد الإخراج `dist`، ومتغيرا البيئة `VITE_SUPABASE_URL` و `VITE_SUPABASE_PUBLISHABLE_KEY`.
+المتغيران يُقرآن وقت البناء: إذا أضفتهما بعد أول نشر فأعد النشر (Deployments ← Redeploy)، وإلا يبقى الموقع في الوضع التجريبي ويظهر «Supabase non configuré».
 أضف رابط الموقع في Supabase ← Authentication ← URL Configuration.
 
 ## ⚠️ بيانات الزبائن
