@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+.env.local
+# Données clients (noms, téléphones) : ne jamais les publier dans un dépôt public
+data/*.csv
+supabase/seed.sql
+src/demo/seed.json
