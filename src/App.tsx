@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BrowserRouter, NavLink, Navigate, Route, Routes } from 'react-router-dom';
-import { Empty } from './components/ui';
 import type { Api } from './lib/api';
 import { AppProvider, useLive } from './lib/context';
 import type { Me, MediaBuyer } from './lib/types';
@@ -35,6 +34,19 @@ export default function App({ api, demo }: { api: Api; demo?: { hasData: boolean
   if (signedIn === null) return <div className="loading">Chargement…</div>;
   if (!signedIn) return <Login api={api} />;
   if (!me) return <div className="loading">Chargement…</div>;
+  // Build sans variables Supabase ni seed.json (ex. Vercel sans env vars) : expliquer au lieu de « Compte non rattaché »
+  if (demo && !demo.hasData) {
+    return (
+      <main className="login">
+        <div className="login__card">
+          <p className="wordmark">ESOLUTIONS</p>
+          <h1>Supabase non configuré</h1>
+          <p>Renseignez <code>VITE_SUPABASE_URL</code> et <code>VITE_SUPABASE_PUBLISHABLE_KEY</code> (fichier <code>.env</code>, ou
+            variables d’environnement Vercel puis Redeploy). En local, <code>npm run sheet:demo</code> génère les données du mode démo.</p>
+        </div>
+      </main>
+    );
+  }
   if (!me.buyer) {
     return (
       <main className="login">
@@ -57,18 +69,11 @@ export default function App({ api, demo }: { api: Api; demo?: { hasData: boolean
         <div className="shell">
           <Rail buyers={visible} me={me} api={api} demo={demo} />
           <main className="main">
-            {demo && !demo.hasData ? (
-              <Empty title="Mode démo sans données">
-                <p>Exportez les onglets de la sheet en CSV dans <code>data/</code>, puis lancez <code>npm run sheet:demo</code>.
-                  Ou renseignez <code>.env</code> pour vous connecter à Supabase.</p>
-              </Empty>
-            ) : (
-              <Routes>
-                <Route path="/" element={me.isManager ? <Dashboard /> : <Navigate to={`/buyer/${me.buyer.id}`} replace />} />
-                <Route path="/buyer/:id" element={<BuyerSheet />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-            )}
+            <Routes>
+              <Route path="/" element={me.isManager ? <Dashboard /> : <Navigate to={`/buyer/${me.buyer.id}`} replace />} />
+              <Route path="/buyer/:id" element={<BuyerSheet />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
           </main>
         </div>
         <div className="toasts" aria-live="polite">
